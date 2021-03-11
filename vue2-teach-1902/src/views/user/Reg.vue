@@ -5,6 +5,8 @@
       用户名：<input type="text" v-model="tbUser.username" /> 密码：<input type="password" v-model="tbUser.password" /> 昵称：<input type="text" v-model="tbUser.nickname" />
       <button @click="reg">注册</button>
       <button @click="reset">重填</button>
+
+      <a @click="toLogin" href="javascript:void(0)">返回登录</a>
     </div>
     <div>{{ tbUser }}</div>
     <div>{{ result }}</div>
@@ -28,6 +30,10 @@ export default {
     };
   },
   methods: {
+    toLogin() {
+      // 使用路由api跳转页面（推荐！！！！），参数就是路由的path
+      this.$router.push('/user/login');
+    },
     reset() {
       this.tbUser = {
         username: '',
