@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 import test_routes from './test';
 // 用户页面路由配置
 import user_routes from './user';
+// 用户页面路由配置
+import euser_routes from './euser';
 
 Vue.use(VueRouter);
 
@@ -16,7 +18,8 @@ const routes = [
   }
 ]
   .concat(test_routes)
-  .concat(user_routes);
+  .concat(user_routes)
+  .concat(euser_routes);
 
 const router = new VueRouter({
   routes
