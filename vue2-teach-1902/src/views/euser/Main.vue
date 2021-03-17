@@ -20,6 +20,10 @@
           <el-form-item>
             <el-input type="password" placeholder="确认密码" v-model="pwd2"></el-input>
           </el-form-item>
+          <el-form-item>
+            <el-button @click="modifyPwd">保存</el-button>
+            <el-button @click="pwdVisible = false">关闭</el-button>
+          </el-form-item>
         </el-form>
       </div>
     </el-dialog>
@@ -38,6 +42,26 @@ export default {
     };
   },
   methods: {
+    modifyPwd() {
+      this.loading = true;
+      this.pwd = this.$md5(this.pwd);
+      this.$ajax(
+        '/user/modifyPwd',
+        {
+          'tbUser.password': this.pwd
+        },
+        function(data) {
+          this.loading = false;
+          this.pwd = '';
+          this.pwd2 = '';
+          if (data.success) {
+            this.$message(data.message);
+          } else {
+            this.$message.error(data.message);
+          }
+        }
+      );
+    },
     logout() {
       this.loading = true;
       this.$ajax('/user/logout', {}, function() {
