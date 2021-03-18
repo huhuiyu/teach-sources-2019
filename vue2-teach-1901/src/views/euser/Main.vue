@@ -16,7 +16,7 @@
     </div>
 
     <!-- 修改密码对话框 -->
-    <el-dialog title="修改登录密码" :visible.sync="pwdVisible">
+    <el-dialog title="修改登录密码" :visible.sync="pwdVisible" :close-on-click-modal="false">
       <div>
         <el-form>
           <el-form-item>
@@ -27,13 +27,14 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button>修改密码</el-button>
+            <el-button @click="modifyPwd">修改密码</el-button>
+            <el-button @click="pwdVisible = false">关闭</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-dialog>
   </div>
-</template>``
+</template>
 <script>
 export default {
   name: 'EleUserMain',
