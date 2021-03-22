@@ -6,8 +6,10 @@ import test_routes from './test';
 import user_routes from './user';
 // 用户页面路由配置
 import euser_routes from './euser';
-// 用户页面路由配置
+// 数据联动页面路由配置
 import link_routes from './link';
+// 数据联动页面路由配置
+import emp_routes from './employee';
 
 Vue.use(VueRouter);
 
@@ -22,7 +24,8 @@ const routes = [
   .concat(test_routes)
   .concat(user_routes)
   .concat(euser_routes)
-  .concat(link_routes);
+  .concat(link_routes)
+  .concat(emp_routes);
 
 const router = new VueRouter({
   routes
