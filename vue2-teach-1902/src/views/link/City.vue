@@ -1,5 +1,8 @@
 <template>
   <div v-loading="loading">
+    <!--  
+      作业：完成两种模式（两个select和select+table）的班级学生数据联动
+    -->
     <div>省份城市联动</div>
     <div>
       <el-select v-model="pid" @change="queryCity">
@@ -11,10 +14,21 @@
       </el-select>
       <hr />
 
-      <el-select v-model="deptId">
+      <el-select v-model="deptId" @change="queryEmp">
         <el-option v-for="d in deptList" :key="d.deptId" :label="d.deptName" :value="d.deptId"></el-option>
       </el-select>
-      {{ deptId }}
+
+      <el-table :data="empList" stripe>
+        <el-table-column label="部门编号" prop="deptId"></el-table-column>
+        <el-table-column label="员工编号" prop="employeeId"></el-table-column>
+        <el-table-column label="员工姓名" prop="employeeName"></el-table-column>
+        <el-table-column label="电话" prop="phone"></el-table-column>
+        <el-table-column label="信息最后修改时间">
+          <template slot-scope="scope">
+            {{ scope.row.lastupdate | formatDate }}
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
@@ -32,11 +46,27 @@ export default {
       // 部门员工的数据
       deptList: [],
       deptId: -1,
-      empList: [],
-      employeeId: -1
+      empList: []
     };
   },
   methods: {
+    queryEmp() {
+      this.loading = true;
+      this.$ajax(
+        '/linkinfo/queryEmployeeByDept',
+        {
+          'tbEmployee.deptId': this.deptId
+        },
+        function(data) {
+          this.loading = false;
+          if (!data.success) {
+            this.$message.error(data.message);
+            return;
+          }
+          this.empList = data.resultData.list;
+        }
+      );
+    },
     queryDept() {
       this.loading = true;
       this.$ajax('/linkinfo/queryAllDept', {}, function(data) {
@@ -47,6 +77,7 @@ export default {
         }
         this.deptList = data.resultData.list;
         this.deptId = this.deptList[0].deptId;
+        this.queryEmp();
       });
     },
     queryProvince() {
