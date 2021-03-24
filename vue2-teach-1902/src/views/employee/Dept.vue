@@ -2,7 +2,7 @@
   <div>
     <div class="text-center pd10">部门信息管理</div>
     <!-- 添加的表单 -->
-    <div class="add-form">
+    <div class="add-form" v-loading="addLoading">
       <el-form :inline="true">
         <el-form-item>
           <el-input v-model="addInfo.deptName" placeholder="部门名称"></el-input>
@@ -81,6 +81,7 @@ export default {
       },
       list: [],
       loading: false,
+      addLoading: false,
       addInfo: {
         deptName: '',
         deptInfo: ''
@@ -134,9 +135,9 @@ export default {
       });
     },
     add() {
-      this.loading = true;
+      this.addLoading = true;
       this.$ajax('/dept/add', { tbDept: this.addInfo }, function(data) {
-        this.loading = false;
+        this.addLoading = false;
         if (data.success) {
           this.addInfo = {
             deptName: '',
