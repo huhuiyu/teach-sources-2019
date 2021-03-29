@@ -8,6 +8,8 @@
       <el-select v-model="cid">
         <el-option v-for="c in clist" :key="c.cid" :label="c.city" :value="c.cid"></el-option>
       </el-select>
+
+      {{ pid | province(plist) }}-{{ cid | city(clist) }}
     </div>
 
     <div>
@@ -16,7 +18,11 @@
       </el-select>
 
       <el-table :data="empList">
-        <el-table-column label="部门编号" prop="deptId"></el-table-column>
+        <el-table-column label="部门编号">
+          <template slot-scope="scope">
+            {{ scope.row.deptId | deptName(deptList) }}
+          </template>
+        </el-table-column>
         <el-table-column label="员工编号" prop="employeeId"></el-table-column>
         <el-table-column label="姓名" prop="employeeName"></el-table-column>
         <el-table-column label="电话" prop="phone"></el-table-column>
