@@ -1,4 +1,8 @@
 <template>
+  <!-- 
+    作业，完成班级和学生信息管理功能
+    学生所在班级需要显示成班级名称
+  -->
   <div v-loading="loading">
     <div>员工管理</div>
     <!-- 查询表单 -->
@@ -57,13 +61,27 @@
     <!-- 员工信息表格和分页 -->
     <div>
       <el-table :data="list">
-        <el-table-column label="所属部门" prop="deptId"></el-table-column>
+        <el-table-column label="所属部门">
+          <template slot-scope="scope">
+            {{ scope.row.deptId }}
+            -
+            {{ showDeptName(scope.row.deptId) }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="过滤器版本部门">
+          <template slot-scope="scope">
+            <!-- 给过滤器传入当前页面的部门列表给过滤器处理信息 -->
+            {{ scope.row.deptId | showDeptName(deptList) }}
+          </template>
+        </el-table-column>
+
         <el-table-column label="姓名" prop="employeeName"></el-table-column>
         <el-table-column label="电话" prop="phone"></el-table-column>
 
         <el-table-column label="最后修改时间">
           <template slot-scope="scope">
-            {{ scope.row.lastupdate | formatDate }}
+            {{ scope.row.lastupdate | formatDate() }}
           </template>
         </el-table-column>
 
@@ -80,8 +98,33 @@
       </nav>
     </div>
 
+    <!-- 修改对话框 -->
     <div>
-      <!-- {{ list }} -->
+      <el-dialog title="员工信息修改" :visible.sync="modifyVisible" :close-on-click-modal="false" @closed="query">
+        <div>
+          <el-form>
+            <!-- element-ui-helper -->
+            <el-form-item>
+              <el-select v-model="modifyInfo.deptId">
+                <el-option v-for="d in deptList" :key="d.deptId" :value="d.deptId" :label="d.deptName"></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item>
+              <el-input v-model="modifyInfo.employeeName"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-input v-model="modifyInfo.phone"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button @click="modifyVisible = false">关闭</el-button>
+              <el-button @click="modify">保存</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -90,6 +133,8 @@ export default {
   name: 'Employee',
   data() {
     return {
+      modifyVisible: false,
+      modifyInfo: {},
       addVisible: false,
       addInfo: {
         deptId: -1,
@@ -111,13 +156,51 @@ export default {
     };
   },
   methods: {
+    //通过方法完成部门编号到部门名称的显示
+    showDeptName(deptId) {
+      for (let i = 0; i < this.deptList.length; i++) {
+        let dept = this.deptList[i];
+        if (dept.deptId == deptId) {
+          return dept.deptName;
+        }
+      }
+      return '查无部门';
+    },
     del(info) {
       console.log(info);
+      let app = this;
+      this.$confirm('是否删除员工：' + info.employeeName, '员工删除', { type: 'warning' })
+        .then(function() {
+          app.$ajax(
+            '/employee/delete',
+            {
+              'tbEmployee.employeeId': info.employeeId
+            },
+            function(data) {
+              app.$message(data.message);
+            }
+          );
+        })
+        .catch(function() {});
     },
     showModify(info) {
       console.log(info);
+      this.modifyInfo = JSON.parse(JSON.stringify(info));
+      this.modifyVisible = true;
     },
-    modify() {},
+    modify() {
+      this.loading = true;
+      this.$ajax(
+        '/employee/update',
+        {
+          tbEmployee: this.modifyInfo
+        },
+        function(data) {
+          this.loading = false;
+          this.$message(data.message);
+        }
+      );
+    },
     add() {
       this.loading = true;
       this.$ajax(

@@ -2,13 +2,16 @@
   <div v-loading="loading">
     <!--  
       作业：完成两种模式（两个select和select+table）的班级学生数据联动
+      作业2：完成班级学生联动的具体信息显示（通过id显示姓名信息）
     -->
     <div>省份城市联动</div>
     <div>
       <el-select v-model="pid" @change="queryCity">
         <el-option v-for="p in plist" :key="p.pid" :label="p.province" :value="p.pid"></el-option>
       </el-select>
-
+      {{ pid | showProvince(plist) }}
+      -
+      {{ cid | showCity(clist) }}
       <el-select v-model="cid">
         <el-option v-for="c in clist" :key="c.cid" :label="c.city" :value="c.cid"></el-option>
       </el-select>
@@ -19,7 +22,13 @@
       </el-select>
 
       <el-table :data="empList" stripe>
-        <el-table-column label="部门编号" prop="deptId"></el-table-column>
+        
+        <el-table-column label="部门编号">
+          <template slot-scope="scope">
+            {{ scope.row.deptId | showDeptName(deptList) }}
+          </template>
+        </el-table-column>
+
         <el-table-column label="员工编号" prop="employeeId"></el-table-column>
         <el-table-column label="员工姓名" prop="employeeName"></el-table-column>
         <el-table-column label="电话" prop="phone"></el-table-column>

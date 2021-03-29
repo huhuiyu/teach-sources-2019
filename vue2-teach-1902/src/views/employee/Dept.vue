@@ -73,33 +73,49 @@ export default {
   name: 'Dept',
   data() {
     return {
+      // 修改表单是否呈现的控制变量
       modifyVisible: false,
+      // 要修改的部门信息对象
       modifyInfo: {},
+      // 分页查询参数信息
       page: {
+        // 当前页码
         pageNumber: 1,
+        // 分页大小
         pageSize: 5
       },
+      // 部门列表
       list: [],
+      // 查询加载控制变量
       loading: false,
+      // 添加信息加载控制变量
       addLoading: false,
+      // 部门添加信息对象
       addInfo: {
         deptName: '',
         deptInfo: ''
       },
+      // 删除部门信息对象
       delInfo: {}
     };
   },
   methods: {
+    // 修改部门信息功能
     modify() {
-      // 这里应该loading修改界面！！！！！
+      // 进入加载模式
       this.loading = true;
+      // 发起ajax请求，接口信息请查阅后端api文档
       this.$ajax(
         '/dept/update',
         {
+          // 修改需要传递部门信息
           tbDept: this.modifyInfo
         },
         function(data) {
+          // ajax应答回来的结果
+          // 退出加载模式
           this.loading = false;
+          // 对话框显示服务器应答消息
           this.$message(data.message);
         }
       );
@@ -134,21 +150,29 @@ export default {
         );
       });
     },
+    // 添加部门的功能
     add() {
+      // 进入添加的加载模式
       this.addLoading = true;
+      // 发起添加的ajax请求
       this.$ajax('/dept/add', { tbDept: this.addInfo }, function(data) {
+        // 退出添加的加载模式
         this.addLoading = false;
+        // 添加成功的情况
         if (data.success) {
+          // 清空用户填写的部门信息
           this.addInfo = {
             deptName: '',
             deptInfo: ''
           };
+          // 显示成功的信息，关闭后启动查询更新页面数据
           this.$message({
             onClose: this.query,
             message: data.message
           });
           return;
         }
+        // 失败就显示错误信息
         this.$message.error(data.message);
       });
     },
