@@ -14,6 +14,11 @@ const routes = [
     path: '/test/ele',
     name: 'TestElementUI',
     component: () => import('../views/test/ElementUI.vue')
+  },
+  {
+    path: '/test/comp',
+    name: 'TestMyComp',
+    component: () => import('../views/test/MyComp.vue')
   }
 ];
 
