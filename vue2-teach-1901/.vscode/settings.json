@@ -43,5 +43,7 @@
   //vue文件格式化为prettier
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.fontSize": 20,
+  "window.zoomLevel": 3
 }

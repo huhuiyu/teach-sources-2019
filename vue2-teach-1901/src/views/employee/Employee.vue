@@ -33,7 +33,24 @@
       <el-dialog title="修改员工信息" :close-on-click-modal="false" :visible.sync="modifyVisible" @closed="query">
         <div>
           <el-form>
-            修改信息表单
+            <el-form-item>
+              <el-select v-model="modifyInfo.deptId">
+                <el-option v-for="d in deptList" :key="d.deptId" :value="d.deptId" :label="d.deptName"></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item>
+              <el-input v-model="modifyInfo.employeeName"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-input v-model="modifyInfo.phone"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button @click="modifyVisible = false">关闭</el-button>
+              <el-button @click="modify">保存</el-button>
+            </el-form-item>
           </el-form>
         </div>
       </el-dialog>
@@ -189,9 +206,22 @@ export default {
     },
     showModify(info) {
       console.log(info);
+      this.modifyInfo = JSON.parse(JSON.stringify(info));
       this.modifyVisible = true;
     },
-    modify() {},
+    modify() {
+      this.loading = true;
+      this.$ajax(
+        '/employee/update',
+        {
+          tbEmployee: this.modifyInfo
+        },
+        function(data) {
+          this.loading = false;
+          this.$message(data.message);
+        }
+      );
+    },
     showDeptName(deptId) {
       for (let i = 0; i < this.deptList.length; i++) {
         let dept = this.deptList[i];
