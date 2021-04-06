@@ -19,6 +19,15 @@ const routes = [
     path: '/test/mycomp',
     name: 'TestMyComp',
     component: () => import('../views/test/MyComp.vue')
+  },
+  // 动态路由配置，动态的部分是:开头加动态路径
+  // 也就是下面的路由必须通过/test/myothercomp/动态路径访问
+  // 而不可以是/test/myothercomp
+  // 地址栏访问是不要加:
+  {
+    path: '/test/myothercomp/:path',
+    name: 'TestMyOtherComp',
+    component: () => import('../views/test/MyOtherComp.vue')
   }
 ];
 
