@@ -27,15 +27,27 @@
       <input type="text" v-model="userinfo.nickname" />
       {{ userinfo }}
     </div>
+    <hr />
+    <h1>组件进阶测试==================</h1>
+    <my-other-comp>
+      <div>黑暗骑士</div>
+
+      <template slot="top">
+        <div>带命名的插槽信息</div>
+      </template>
+
+      <div>小丑</div>
+    </my-other-comp>
   </div>
 </template>
 <script>
 // 导入组件
 import MyComp from '../../components/MyComp';
+import MyOtherComp from '../../components/MyOtherComp';
 export default {
   name: 'TestMyComp',
   // 引用组件
-  components: { MyComp },
+  components: { MyComp, MyOtherComp },
   data() {
     return {
       compVisible: false,
