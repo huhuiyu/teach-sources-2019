@@ -120,12 +120,22 @@
       <nav>
         <el-pagination :page-size.sync="page.pageSize" :total="page.total" :current-page.sync="page.pageNumber" @current-change="query"></el-pagination>
       </nav>
+
+      <div>
+        <page :page="page" 
+          :layout="'prev,sizes,pager,next'"
+          :sizes="[2,5,10]"
+          @page-change="query"></page>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import Page from '../../componets/Page';
+
 export default {
   name: 'Employee',
+  components: { Page },
   data() {
     return {
       // 控制加载页面
