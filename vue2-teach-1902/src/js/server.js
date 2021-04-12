@@ -60,4 +60,54 @@ server.ajax = function(url, param, cb, method, thisArg) {
     });
 };
 
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
+// 上传文件的ajax请求,url:后端地址，file，上传的文件对象
+// params：附件的请求参数，cb，应答的回调函数
+server.sendFile = function(url, file, params, cb) {
+  // 限制文件上传大小
+  if (file.size > MAX_FILE_SIZE) {
+    cb({ message: '文件大小超过限制', code: 500, success: false });
+    return;
+  }
+  // 完整地址
+  url = server.baseUrl + url;
+  // 数据必须是FormData传递
+  let formdata = new FormData();
+  formdata.append('file', file);
+  // 附加的json参数通过迭代添加
+  for (let key in params) {
+    formdata.append(key, params[key]);
+  }
+  // { name:'abc',info:1 },key就是name,info
+  // json对象[字段名称]等同于json对象.字段名称
+  // 文件ajax请求
+  let promise = axios({
+    // 必须是post请求
+    method: 'POST',
+    url: url,
+    // 数据为FormData
+    data: formdata,
+    headers: {
+      // 必要的token参数
+      token: server.getToken(),
+      // 必要内容类型
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  promise
+    .then(function(resp) {
+      server.saveToken(resp.data);
+      cb(resp.data);
+    })
+    .catch(function(error) {
+      console.error('上传发生错误', error);
+      cb({
+        code: 500,
+        message: '上传发生错误',
+        success: false,
+        error: error
+      });
+    });
+};
+
 export default server;

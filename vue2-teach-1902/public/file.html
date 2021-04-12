@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件上传js基础</title>
+</head>
+
+<body>
+  <!-- 表单元素里面的文件输入框 -->
+  <input type="file" id="file">
+  <button id="btnFile">获取文件信息</button>
+  <!-- 模拟文件选择 -->
+  <button id="btnOpenFile">打开文件</button>
+
+  <img src="" alt="" id="imgFile" style="width: 10rem;">
+  <div id="divName"></div>
+
+  <script>
+    // 基础知识部分
+    let file = document.getElementById('file');
+    let btnFile = document.getElementById('btnFile');
+
+    btnFile.addEventListener('click', function () {
+      // 获取文件表单元素的选中文件信息（数组）
+      console.log('选中的文件：', file.files);
+    });
+
+    file.addEventListener('click', function () {
+      console.log('开始选择文件');
+    });
+
+    file.addEventListener('cancel', function () {
+      console.log('取消文件选择');
+    });
+
+    file.addEventListener('change', function () {
+      console.log('文件选择变化', file.files);
+    });
+
+    // 进阶部分
+    let btnOpenFile = document.getElementById('btnOpenFile');
+    btnOpenFile.addEventListener('click', function () {
+      // 伪造file表单元素
+      let eleFile = document.createElement('input');
+      eleFile.setAttribute('type', 'file');
+      // 监听change事件来获取选中文件信息
+      eleFile.addEventListener('change', function () {
+        console.log('虚拟file元素的文件变化：', eleFile.files);
+        if (!eleFile.files || eleFile.files.length != 1) {
+          return;
+        }
+        // 选中的文件信息
+        let selFile = eleFile.files[0];
+        console.log('选中的文件：', selFile);
+        let type = selFile.type;
+        let subtype = type.substr(0, 6);
+        // 如果是图片，会出现预览效果！
+        if (subtype == 'image/') {
+          console.log('选中的是图片');
+          // 通过html5的文件读取api来预览图片
+          let reader = new FileReader();
+          reader.onloadstart = function () {
+            console.log('开始读取文件信息');
+          };
+          reader.onloadend = function () {
+            console.log('读取文件信息完毕');
+          };
+          reader.onprogress = function () {
+            console.log('读取文件信息中');
+          };
+          reader.onerror = function () {
+            console.log('读取文件信息发生错误');
+          };
+          reader.onabort = function () {
+            console.log('读取文件信息中断');
+          };
+          // 读取结果
+          reader.onload = function (event) {
+            let imgFile = document.getElementById('imgFile');
+            imgFile.setAttribute('src',
+              event.target.result);
+          };
+
+          // 读取图片成data格式
+          reader.readAsDataURL(selFile);
+
+        } else {
+          // 不是图片就显示文件名
+          console.log(selFile.name);
+          document.getElementById('divName')
+            .innerHTML = selFile.name;
+        }
+
+      });
+      // 触发点击事件来选择文件
+      eleFile.click();
+
+    });
+
+  </script>
+
+</body>
+
+</html>

@@ -129,4 +129,46 @@ tools.jsonSyntaxHighlight = function(json) {
   return json;
 };
 
+// 文件相关api
+// 封装打开文件的功能，完成后需要回调
+tools.openFile = function(cb) {
+  let file = document.createElement('input');
+  file.setAttribute('type', 'file');
+  file.addEventListener('change', function() {
+    // 有且选中一个文件的情况
+    if (file.files && file.files.length == 1) {
+      cb(file.files[0]);
+    } else {
+      cb(null);
+    }
+  });
+  file.addEventListener('cancel', function() {
+    cb(null);
+  });
+
+  file.click();
+};
+// 判断文件是否为图片
+tools.isImage = function(file) {
+  let type = file.type.substr(0, 6);
+  return type == 'image/';
+};
+
+// 读取图片文件
+tools.readImage = function(file, cb) {
+  let reader = new FileReader();
+  reader.addEventListener('error', function() {
+    cb('');
+  });
+  reader.addEventListener('abort', function() {
+    cb('');
+  });
+
+  reader.addEventListener('load', function(event) {
+    cb(event.target.result);
+  });
+
+  reader.readAsDataURL(file);
+};
+
 export default tools;
