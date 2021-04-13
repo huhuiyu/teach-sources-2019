@@ -28,6 +28,11 @@ const routes = [
     path: '/test/myothercomp/:path',
     name: 'TestMyOtherComp',
     component: () => import('../views/test/MyOtherComp.vue')
+  },
+  {
+    path: '/test/file',
+    name: 'TestFile',
+    component: () => import('../views/test/File.vue')
   }
 ];
 

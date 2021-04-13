@@ -13,13 +13,80 @@
   <!-- 选择文件的表单元素 -->
   <input type="file" id="file1">
   <button id="btnFile1">文件信息</button>
+  <!-- 虚拟的文件表单元素 -->
+  <button id="btnOpen">打开选择文件</button>
+  <img style="width: 15rem;" src="" id="imgDemo">
+  <span id="spFilename"></span>
 
   <script>
+
     let file1 = document.getElementById('file1');
     let btnFile1 = document.getElementById('btnFile1');
     btnFile1.addEventListener('click', function () {
       console.log(file1.files);
     });
+
+    // 虚拟的文件表单元素
+    let btnOpen = document.getElementById('btnOpen');
+    btnOpen.addEventListener('click', function () {
+      // 动态创建
+      let file = document.createElement('input');
+      file.setAttribute('type', 'file');
+      // 监听文件表单元素的选择变化
+      file.addEventListener('change', function () {
+        console.log('文件选择发生变化：', file.files);
+        if (!file.files || file.files.length != 1) {
+          return;
+        }
+        let fileinfo = file.files[0];
+        console.log(fileinfo);
+        // 如果是图片就预览，否则就显示文件名
+        let type = fileinfo.type.substr(0, 6);
+        if ("image/" == type) {
+          // 图片预览，通过html5新增的api转换图片为dataUrl格式
+          let reader = new FileReader();
+          // 监听生命周期流程
+          reader.addEventListener('loadstart', function () {
+            console.log('开始读取文件');
+          });
+          reader.addEventListener('loadend', function () {
+            console.log('读取完毕');
+          });
+          reader.addEventListener('progress', function () {
+            console.log('读取中。。。');
+          });
+          // 异常情况
+          reader.addEventListener('error', function () {
+            console.log('读取发生错误');
+          });
+          reader.addEventListener('abort', function () {
+            console.log('读取被终止');
+          });
+          // 读取结果监听
+          reader.addEventListener('load', function (event) {
+            let imgDemo = document.getElementById('imgDemo');
+            imgDemo.setAttribute('src', event.target.result);
+          });
+
+          // 开始读取文件为dataUrl数据
+          reader.readAsDataURL(fileinfo);
+
+        } else {
+          document.getElementById('spFilename')
+            .innerHTML = fileinfo.name;
+        }
+
+      });
+      // 监听取消动作
+      file.addEventListener('cancel', function () {
+        console.log('用户取消选择');
+      });
+
+      // 触发点击动作，也就是开启选择文件对话框
+      file.click();
+    });
+
+
   </script>
 
 </body>

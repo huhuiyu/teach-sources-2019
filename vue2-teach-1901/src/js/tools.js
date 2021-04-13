@@ -129,4 +129,46 @@ tools.jsonSyntaxHighlight = function(json) {
   return json;
 };
 
+// 打开文件并选择的通用方法，参数是文件选择后的回调处理函数
+tools.openFile = function(cb) {
+  let eleFile = document.createElement('input');
+  eleFile.setAttribute('type', 'file');
+
+  eleFile.addEventListener('change', function() {
+    // 只要单选文件
+    if (eleFile.files && eleFile.files.length == 1) {
+      cb(eleFile.files[0]);
+    } else {
+      cb(null);
+    }
+  });
+
+  eleFile.addEventListener('cancel', function() {
+    cb(null);
+  });
+
+  eleFile.click();
+};
+
+// 判断文件是否为图片
+tools.isImage = function(file) {
+  let type = file.type.substr(0, 6);
+  return 'image/' == type;
+};
+
+// 读取文件内容为dataUrl格式结果
+tools.readImage = function(file, cb) {
+  let reader = new FileReader();
+  reader.addEventListener('error', function() {
+    cb('');
+  });
+  reader.addEventListener('abort', function() {
+    cb('');
+  });
+  reader.addEventListener('load', function(ev) {
+    cb(ev.target.result);
+  });
+  reader.readAsDataURL(file);
+};
+
 export default tools;
