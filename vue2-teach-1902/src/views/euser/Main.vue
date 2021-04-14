@@ -10,6 +10,9 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <div>
+      <el-button @click="toFileManage">文件管理</el-button>
+    </div>
     <!-- 修改密码的对话框 -->
     <el-dialog title="修改用户密码" :visible.sync="pwdVisible">
       <div>
@@ -42,6 +45,9 @@ export default {
     };
   },
   methods: {
+    toFileManage() {
+      this.$router.push('/file/manage');
+    },
     modifyPwd() {
       this.loading = true;
       this.pwd = this.$md5(this.pwd);

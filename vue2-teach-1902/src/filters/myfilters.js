@@ -38,3 +38,9 @@ Vue.filter('showCity', function(value, clist) {
   }
   return value;
 });
+
+// 转换size信息
+Vue.filter('filesize', function(value) {
+  // 转换的逻辑
+  return value + '字节';
+});
