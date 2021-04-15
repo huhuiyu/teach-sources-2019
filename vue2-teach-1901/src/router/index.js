@@ -10,6 +10,8 @@ import euser_routes from './euser';
 import link_routes from './link';
 // 数据联动页面路由配置
 import emp_routes from './employee';
+// 文件管理页面路由配置
+import file_routes from './file';
 
 Vue.use(VueRouter);
 
@@ -21,6 +23,7 @@ const routes = [
     component: () => import('../views/Home.vue')
   }
 ]
+  .concat(file_routes)
   .concat(test_routes)
   .concat(user_routes)
   .concat(euser_routes)
