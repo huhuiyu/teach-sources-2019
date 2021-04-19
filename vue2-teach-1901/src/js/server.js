@@ -66,6 +66,16 @@ const MAX_FILE_SIZE = 1.5 * 1024 * 1024;
 // params，附加的请求参数（json格式），cb，回调
 server.sendFile = function(url, file, params, cb) {
   console.log('文件信息：', file);
+  // 必须要有文件
+  if (file == null || !file) {
+    cb({
+      code: 500,
+      success: false,
+      message: '必须选择文件'
+    });
+    return;
+  }
+  // 文件大小限制
   if (file.size > MAX_FILE_SIZE) {
     cb({
       code: 500,

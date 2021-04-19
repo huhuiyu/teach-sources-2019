@@ -1,7 +1,24 @@
 <template>
   <div>
     <div>{{ title }}</div>
+    <!-- 查询表单 -->
+    <div>
+      <el-form :inline="true">
+        <el-form-item>
+          <el-input v-model="queryInfo.filename" placeholder="文件名模糊查询"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="queryInfo.fileinfo" placeholder="文件描述模糊查询"></el-input>
+        </el-form-item>
 
+        <el-form-item>
+          <el-button @click="query">查询</el-button>
+          <el-button @click="reset">重置</el-button>
+          <el-button @click="toAdd">上传</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <!-- 数据表格 -->
     <div>
       <el-table :data="list">
         <el-table-column label="文件名称" prop="filename"></el-table-column>
@@ -16,24 +33,55 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button @click="download(scope.row.fid)">下载</el-button>
+            <el-button @click="del(scope.row)">删除</el-button>
             <el-button v-if="isImage(scope.row)" @click="showImage(scope.row)">
               预览
             </el-button>
           </template>
         </el-table-column>
       </el-table>
+
+      <page :page="page" @page-change="query"></page>
     </div>
-    <div>{{ imgUrl }}</div>
-    <!-- <div>
-      {{ page }}
-      <br />
-      {{ list }}
-    </div> -->
+    <!-- 图片预览对话框 -->
+    <div>
+      <el-dialog title="图片预览" :visible.sync="imgDialog">
+        <div>
+          <img :src="imgUrl" alt="" />
+        </div>
+      </el-dialog>
+    </div>
+    <!-- 添加对话框 -->
+    <div>
+      <el-dialog title="文件上传" :close-on-click-modal="false" @closed="query" :visible.sync="addDialog">
+        <div>
+          <el-form>
+            <el-form-item>
+              <el-input v-model="addInfo.fileinfo" placeholder="文件描述"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button @click="openFile">选择文件...</el-button>
+              <span v-if="file">{{ file.name }}</span>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button @click="resetAdd">重置</el-button>
+              <el-button @click="upload">上传</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
+import Page from '../../componets/Page';
+import tools from '../../js/tools';
+
 export default {
   name: 'FileManage',
+  components: { Page },
   data() {
     return {
       title: '文件管理',
@@ -48,12 +96,84 @@ export default {
       list: [],
       loading: false,
       // 预览图片地址
-      imgUrl: ''
+      imgUrl: '',
+      imgDialog: false,
+      // 添加相关
+      file: null,
+      addInfo: {
+        fileinfo: ''
+      },
+      addDialog: false
     };
   },
   methods: {
+    del(file) {
+      let app = this;
+      app
+        .$confirm('是否删除文件：' + file.filename, '删除文件')
+        .then(function() {
+          app.$ajax(
+            '/file/delete',
+            {
+              'tbFile.fid': file.fid
+            },
+            function(data) {
+              app.$message({
+                message: data.message,
+                onClose: app.query,
+                showClose: true
+              });
+            }
+          );
+        })
+        .catch(function() {});
+    },
+    openFile() {
+      let app = this;
+      tools.openFile(function(file) {
+        app.file = file;
+      });
+    },
+    upload() {
+      let app = this;
+      app.$sendFile(
+        '/file/upload',
+        app.file,
+        {
+          'tbFile.fileinfo': this.addInfo.fileinfo
+        },
+        function(data) {
+          app.$message(data.message);
+          if (data.success) {
+            app.resetAdd();
+          }
+        }
+      );
+    },
+    toAdd() {
+      this.resetAdd();
+      this.addDialog = true;
+    },
+    resetAdd() {
+      this.file = null;
+      this.addInfo = {
+        fileinfo: ''
+      };
+    },
+    reset() {
+      this.page = {
+        pageNumber: 1,
+        pageSize: 5
+      };
+      this.queryInfo = {
+        fileinfo: '',
+        filename: ''
+      };
+      this.query();
+    },
     showImage(file) {
       this.imgUrl = this.$getDownloadUrl(file.fid);
+      this.imgDialog = true;
     },
     isImage(file) {
       return file.contentType.substr(0, 6) == 'image/';
@@ -91,3 +211,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+/* 每个饿了么ui的组件都套用了同名的class */
+.el-dialog img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+</style>

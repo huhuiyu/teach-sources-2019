@@ -23,5 +23,9 @@ myplugin.install = function(Vue) {
     url = url + '&request_token=' + server.getToken();
     return url;
   };
+  // 上传文件ajax方法插件封装
+  Vue.prototype.$sendFile = function(url, file, params, cb) {
+    server.sendFile(url, file, params, cb);
+  };
 };
 export default myplugin;

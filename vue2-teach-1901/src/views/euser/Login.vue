@@ -51,6 +51,10 @@ export default {
   },
   methods: {
     login() {
+      if (this.tbUser.username.trim() == '') {
+        this.$message.error('用户名必须填写');
+        return;
+      }
       this.loading = true;
       this.tbUser.password = this.$md5(this.tbUser.password);
       this.$ajax(
