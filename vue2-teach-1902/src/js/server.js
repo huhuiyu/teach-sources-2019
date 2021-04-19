@@ -75,6 +75,7 @@ server.sendFile = function(url, file, params, cb) {
   let formdata = new FormData();
   formdata.append('file', file);
   // 附加的json参数通过迭代添加
+  // 如果需要支持多级字段，需要对json属性做递归处理
   for (let key in params) {
     formdata.append(key, params[key]);
   }
