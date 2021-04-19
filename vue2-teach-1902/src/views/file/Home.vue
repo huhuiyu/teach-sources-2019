@@ -41,6 +41,10 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 最简单调用版本 -->
+      <page :page="page" @page-change="query"></page>
+      <!-- 可以定制的调用版本 -->
+      <page :page="page" :layout="'prev,total,next,sizes'" :sizes="[5, 50, 100]" @page-change="query"></page>
     </div>
 
     <!-- 图片预览对话框 -->
@@ -82,8 +86,11 @@
 </template>
 <script>
 import tools from '../../js/tools';
+import Page from '../../components/Page';
+
 export default {
   name: 'FileManage',
+  components: { Page },
   data() {
     return {
       title: '文件上传管理',

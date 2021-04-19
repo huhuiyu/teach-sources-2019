@@ -42,5 +42,9 @@ Vue.filter('showCity', function(value, clist) {
 // 转换size信息
 Vue.filter('filesize', function(value) {
   // 转换的逻辑
+  // Math.log(1024) 0 byte
+  //                1 kb
+  // Math.log(10)
+  // 最简单方法 if(kb最小值 kb最大值) kb
   return value + '字节';
 });

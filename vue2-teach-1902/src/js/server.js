@@ -60,10 +60,16 @@ server.ajax = function(url, param, cb, method, thisArg) {
     });
 };
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024;
+const MAX_FILE_SIZE = 1.8 * 1024 * 1024;
 // 上传文件的ajax请求,url:后端地址，file，上传的文件对象
 // params：附件的请求参数，cb，应答的回调函数
 server.sendFile = function(url, file, params, cb) {
+  // console.log('上传文件信息：', file, file.size > MAX_FILE_SIZE);
+  // 文件必须存在
+  if (file == null || !file) {
+    cb({ message: '请选择文件', code: 500, success: false });
+    return;
+  }
   // 限制文件上传大小
   if (file.size > MAX_FILE_SIZE) {
     cb({ message: '文件大小超过限制', code: 500, success: false });
