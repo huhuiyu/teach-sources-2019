@@ -21,9 +21,18 @@ myplugin.install = function(Vue) {
     // 下载地址
     let url = server.baseUrl + '/file/download';
     // 请求参数
-    url = url + '?tbFile.fid=' + fid 
-      + '&request_token=' + server.getToken();
+    url = url + '?tbFile.fid=' + fid + '&request_token=' + server.getToken();
     return url;
+  };
+  // 正则校验器插件封装
+  Vue.prototype.$regValidate = function(
+    rule, value, callback, reg, message) {
+    console.log(rule);
+    if (reg.test(value)) {
+      callback();
+    } else {
+      callback(new Error(message));
+    }
   };
 };
 export default myplugin;
