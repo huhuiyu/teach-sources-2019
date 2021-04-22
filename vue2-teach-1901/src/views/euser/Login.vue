@@ -3,21 +3,21 @@
     <el-card class="box-card">
       <div slot="header">用户登录</div>
       <div>
-        <el-form>
-          <el-form-item>
-            <el-input v-model="tbUser.username" placeholder="登录名">
+        <el-form :model="formdata" :rules="rules" ref="myform">
+          <el-form-item prop="tbUser.username">
+            <el-input v-model="formdata.tbUser.username" placeholder="登录名">
               <i slot="suffix" class="el-input__icon el-icon-user"></i>
             </el-input>
           </el-form-item>
 
-          <el-form-item>
-            <el-input type="password" show-password v-model="tbUser.password" placeholder="密码">
+          <el-form-item prop="tbUser.password">
+            <el-input type="password" show-password v-model="formdata.tbUser.password" placeholder="密码">
               <i slot="prefix" class="iconfont">&#xe600;</i>
             </el-input>
           </el-form-item>
 
-          <el-form-item>
-            <el-input v-model="imgcode" placeholder="图片校验码"></el-input>
+          <el-form-item prop="imgcode">
+            <el-input v-model="formdata.imgcode" placeholder="图片校验码"></el-input>
           </el-form-item>
 
           <el-form-item v-loading="imgLoading">
@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+let app = null;
 export default {
   name: 'EleUserLogin',
   data() {
@@ -42,30 +43,56 @@ export default {
       loading: false,
       imgLoading: false,
       imgSrc: '',
-      imgcode: '',
-      tbUser: {
-        username: '',
-        password: ''
+      formdata: {
+        imgcode: '',
+        tbUser: {
+          username: '',
+          password: ''
+        }
+      },
+      rules: {
+        imgcode: [
+          {
+            required: true,
+            message: '图片校验码必须填写'
+          },
+          {
+            len: 5,
+            message: '图片校验码长度是5个'
+          }
+        ],
+        'tbUser.username': [
+          {
+            required: true,
+            message: '用户名必须填写'
+          },
+          {
+            min: 3,
+            max: 15,
+            message: '用户长度是3-15'
+          }
+        ],
+        'tbUser.password': {
+          validator: function(rule, value, cb) {
+            app.$regValidate(rule, value, cb, /^[A-Za-z0-9]{3,14}$/, '密码是长度为3-14的字符数字和_-');
+          }
+        }
       }
     };
   },
   methods: {
     login() {
-      if (this.tbUser.username.trim() == '') {
-        this.$message.error('用户名必须填写');
-        return;
-      }
       this.loading = true;
-      this.tbUser.password = this.$md5(this.tbUser.password);
+      this.formdata.tbUser.password = this.$md5(this.formdata.tbUser.password);
       this.$ajax(
         '/user/login',
         {
-          imgcode: this.imgcode,
-          tbUser: this.tbUser
+          imgcode: this.formdata.imgcode,
+          tbUser: this.formdata.tbUser
         },
         function(data) {
           this.loading = false;
-          this.tbUser.password = '';
+          this.formdata.tbUser.password = '';
           if (data.success) {
             this.$router.push('/euser/main');
           } else {
@@ -93,6 +120,7 @@ export default {
     }
   },
   created() {
+    app = this;
     this.loadImgCode();
   }
 };

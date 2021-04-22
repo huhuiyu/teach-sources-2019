@@ -27,5 +27,14 @@ myplugin.install = function(Vue) {
   Vue.prototype.$sendFile = function(url, file, params, cb) {
     server.sendFile(url, file, params, cb);
   };
+  // 将正则校验封装到插件
+  Vue.prototype.$regValidate = function(rule, value, cb, reg, message) {
+    console.log(rule);
+    if (reg.test(value)) {
+      cb();
+    } else {
+      cb(new Error(message));
+    }
+  };
 };
 export default myplugin;
