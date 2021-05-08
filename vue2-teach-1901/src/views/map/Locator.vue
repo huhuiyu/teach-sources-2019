@@ -5,7 +5,9 @@
     </div>
     <div v-loading="loading">
       <div>{{ resultInfo }}</div>
-      <div>功能区域</div>
+      <div>
+        <el-button @click="openMap">地图调起</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +26,9 @@ export default {
     };
   },
   methods: {
+    openMap() {
+      window.open('https://uri.amap.com/marker?position=' + this.resultInfo.position.lng + ',' + this.resultInfo.position.lat + '&name=' + this.resultInfo.address);
+    },
     loadUiInfo(position) {
       console.log('ui起始地址：', position);
       AMapUI.loadUI(['misc/PositionPicker'], function(PositionPicker) {
