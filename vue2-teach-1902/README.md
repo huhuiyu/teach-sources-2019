@@ -12,3 +12,5 @@
   - 路由配置分配到router目录中的不同文件中，例如test.js都是测试功能页面，路由路径都是test开头
   - ajax请求的使用请查看views/test/Ajax.vue
   - iconfont，公用css，工具类，自定义指令，自定义过滤器，饿了么ui的使用请查看views/test/Tools.vue
+- wangeditor(富文本编辑器)
+  - 执行`npm install wangeditor --save`安装
