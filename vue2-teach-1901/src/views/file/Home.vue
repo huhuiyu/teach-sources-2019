@@ -10,6 +10,9 @@
         <el-form-item>
           <el-input v-model="queryInfo.fileinfo" placeholder="文件描述模糊查询"></el-input>
         </el-form-item>
+        <el-form-item>
+          <el-input v-model="queryInfo.contentType" placeholder="文件类型模糊查询"></el-input>
+        </el-form-item>
 
         <el-form-item>
           <el-button @click="query">查询</el-button>
@@ -36,6 +39,9 @@
             <el-button @click="del(scope.row)">删除</el-button>
             <el-button v-if="isImage(scope.row)" @click="showImage(scope.row)">
               预览
+            </el-button>
+            <el-button @click="showFileUrl(scope.row.fid)">
+              显示文件地址
             </el-button>
           </template>
         </el-table-column>
@@ -91,7 +97,8 @@ export default {
       },
       queryInfo: {
         fileinfo: '',
-        filename: ''
+        filename: '',
+        contentType: ''
       },
       list: [],
       loading: false,
@@ -107,6 +114,10 @@ export default {
     };
   },
   methods: {
+    showFileUrl(fid) {
+      let app = this;
+      app.$message(app.$getDownloadUrl(fid));
+    },
     del(file) {
       let app = this;
       app
