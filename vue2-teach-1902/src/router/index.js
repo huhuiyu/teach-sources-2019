@@ -14,6 +14,9 @@ import emp_routes from './employee';
 import file_router from './file';
 // 地图关联页面路由配置
 import map_router from './map';
+// 门户页面路由配置
+import portable_router from './portable';
+
 
 Vue.use(VueRouter);
 
@@ -25,6 +28,7 @@ const routes = [
     component: () => import('../views/Home.vue')
   }
 ]
+  .concat(portable_router)
   .concat(map_router)
   .concat(file_router)
   .concat(test_routes)

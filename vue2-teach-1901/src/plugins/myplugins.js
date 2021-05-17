@@ -4,6 +4,8 @@ import tools from '../js/tools';
 let myplugin = {};
 
 myplugin.install = function(Vue) {
+  // 门户标识accesskey
+  Vue.prototype.$accessKey = 'aa57339a-0275-43cf-b2ac-a035c04c1546';
   // ajax插件封装
   Vue.prototype.$ajax = function(url, param, callback, method) {
     server.ajax(url, param, callback, method, this);

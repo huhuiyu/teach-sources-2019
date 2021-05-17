@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+
+<body>
+  <div id="app">
+    <div>{{title}}</div>
+    <div>{{result}}</div>
+    <div>{{indexResult}}</div>
+    <div>
+      <img width="50px" :src="imgUrl(result.img)" alt="">
+    </div>
+    <div>
+      <a :href="'mailto:'+result.email">
+        公司邮箱:{{result.email}}
+      </a>
+      |
+      <a :href="'tel:'+result.phone">
+        公司邮箱:{{result.phone}}
+      </a>
+    </div>
+    <div>{{result.copyright }}</div>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+
+  <script src="js/ajax.js"></script>
+  <script src="js/portable.js"></script>
+</body>
+
+</html>

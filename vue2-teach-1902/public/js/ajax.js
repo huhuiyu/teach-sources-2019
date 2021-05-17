@@ -15,6 +15,20 @@
     accessKey: '808d413c-dcb4-4f21-9e8a-521bec008124'
   };
   let ajax = {
+    convertData(data) {
+      // 转换门户信息的数组成单一json
+      console.log('转换前的结果：', data);
+      let result = {};
+      for (let i = 0; i < data.length; i++) {
+        let message = data[i];
+        result[message.messageKey] = message.message;
+      }
+      console.log('转换后的结果：', result);
+      return result;
+    },
+    getAccessKey() {
+      return server.accessKey;
+    },
     // 获取文件下载链接
     getFileUrl(fid) {
       return server.baseUrl + '/file/download?request_token=' + server.loadToken() + '&tbFile.fid=' + fid;

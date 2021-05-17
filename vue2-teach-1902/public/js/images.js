@@ -1,4 +1,5 @@
 (function() {
+
   // console.log(SparkMD5.hash('abc'));
   let app = null;
   new Vue({
