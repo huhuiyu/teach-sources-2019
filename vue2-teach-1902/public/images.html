@@ -10,7 +10,34 @@
 </head>
 
 <body>
+  <div id="app">
+    <div v-if="!loginUser">
+      用户登录
+      <div>
+        用户名：
+        <input type="text" v-model="tbUser.username" />
+        密码：
+        <input type="password" v-model="tbUser.password" />
+        图片校验码：
+        <input type="text" v-model="imgcode" />
+        <img :src="imgSrc" @click="getImgCode" title="点击更换" />
+        <button @click="login">登录</button>
+      </div>
+      <div>{{ result }}</div>
+    </div>
+    <div v-if="loginUser">
+      <div>{{loginUser.username}}的个人相册</div>
+      <!-- 图片显示 -->
+      <div>
+        <div v-for="img in list" :key="img.fid">
+          {{img.fileinfo}}
+          <img :src="getImgUrl(img.fid)" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>

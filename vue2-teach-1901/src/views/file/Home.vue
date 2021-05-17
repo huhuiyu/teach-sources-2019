@@ -24,6 +24,7 @@
     <!-- 数据表格 -->
     <div>
       <el-table :data="list">
+        <el-table-column label="文件编号" prop="fid"></el-table-column>
         <el-table-column label="文件名称" prop="filename"></el-table-column>
         <el-table-column label="文件描述" prop="fileinfo"></el-table-column>
         <el-table-column label="类型" prop="contentType"></el-table-column>

@@ -33,6 +33,21 @@
           console.error(error);
           cb({ code: 500, success: false, message: '请求失败' });
         });
+    },
+    saveUser: function(user) {
+      sessionStorage.setItem('local-user-info', JSON.stringify(user));
+    },
+    loadUser() {
+      let user = sessionStorage.getItem('local-user-info');
+      if (user) {
+        return JSON.parse(user);
+      }
+      return null;
+    },
+    getFileUrl(fid) {
+      return server.baseUrl + 
+        '/file/download?request_token='+server.loadToken()
+        +'&tbFile.fid='+fid;
     }
   };
 
