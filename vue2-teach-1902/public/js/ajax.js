@@ -34,10 +34,10 @@
       return server.baseUrl + '/file/download?request_token=' + server.loadToken() + '&tbFile.fid=' + fid;
     },
     saveUser(user) {
-      localStorage.setItem(server.localUserKey, JSON.stringify(user));
+      sessionStorage.setItem(server.localUserKey, JSON.stringify(user));
     },
     loadUser() {
-      let user = localStorage.getItem(server.localUserKey);
+      let user = sessionStorage.getItem(server.localUserKey);
       if (!user) {
         return null;
       }
