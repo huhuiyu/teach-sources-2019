@@ -66,5 +66,16 @@
     }
   };
 
+  // 转换文件地址信息
+  if (Vue) {
+    Vue.filter('fileurl', function(value) {
+      // 下载地址
+      let url = server.baseUrl + '/file/download';
+      // 请求参数
+      url = url + '?tbFile.fid=' + value + '&request_token=' + server.loadToken();
+      return url;
+    });
+  }
+
   window.ajax = ajax;
 })();

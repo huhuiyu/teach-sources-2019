@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import tools from '../js/tools';
+import server from '../js/server';
 
 // 日期格式化
 Vue.filter('formatDate', function(value, format) {
@@ -47,4 +48,13 @@ Vue.filter('filesize', function(value) {
   // Math.log(10)
   // 最简单方法 if(kb最小值 kb最大值) kb
   return value + '字节';
+});
+
+// 转换文件地址信息
+Vue.filter('fileurl', function(value) {
+  // 下载地址
+  let url = server.baseUrl + '/file/download';
+  // 请求参数
+  url = url + '?tbFile.fid=' + value + '&request_token=' + server.getToken();
+  return url;
 });
