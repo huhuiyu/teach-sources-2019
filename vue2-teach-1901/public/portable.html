@@ -26,6 +26,15 @@
       </a>
     </div>
     <div>{{result.copyright }}</div>
+
+    <div v-html="indexResult.editor"></div>
+
+
+    <div>
+      <img width="50px" :src="result.img | fileurl" alt="">
+      {{ result.img | fileurl }}
+    </div>
+
   </div>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>

@@ -38,6 +38,11 @@ const routes = [
     path: '/test/validate',
     name: 'TestValidate',
     component: () => import('../views/test/Validate.vue')
+  },
+  {
+    path: '/test/fileselector',
+    name: 'TestFileSelector',
+    component: () => import('../views/test/FileSelector.vue')
   }
 ];
 

@@ -68,5 +68,15 @@
     }
   };
 
+  // 如果vue存在就编写过滤器功能
+  if (Vue) {
+    Vue.filter('fileurl', function(value) {
+      let url = server.baseUrl + '/file/download?';
+      url = url + 'tbFile.fid=' + value;
+      url = url + '&request_token=' + server.loadToken();
+      return url;
+    });
+  }
+
   window.ajax = ajax;
 })();
