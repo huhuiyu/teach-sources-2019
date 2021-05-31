@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // 测试页面路由配置
 import test_routes from './test';
+// 门户页面路由配置
+import portable_routes from './portable';
 
 Vue.use(VueRouter);
 
@@ -17,7 +19,9 @@ const routes = [
     name: 'Main',
     component: () => import('../views/Main.vue')
   }
-].concat(test_routes);
+]
+  .concat(portable_routes)
+  .concat(test_routes);
 
 const router = new VueRouter({
   routes

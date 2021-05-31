@@ -1,13 +1,13 @@
-(function() {
+(function () {
   // 服务器端信息
   const server = {
     tokenKey: 'local-token-info',
-    saveTokey: function(data) {
+    saveTokey: function (data) {
       if (data && data.token) {
         localStorage.setItem(server.tokenKey, data.token);
       }
     },
-    loadToken: function() {
+    loadToken: function () {
       return localStorage.getItem(server.tokenKey);
     },
     baseUrl: 'https://huhuiyu.top/teach-demo-service',
@@ -27,11 +27,17 @@
       return result;
     },
     getAccessKey() {
-      return server.accessKey;
+      return '808d413c-dcb4-4f21-9e8a-521bec008124';
     },
     // 获取文件下载链接
     getFileUrl(fid) {
-      return server.baseUrl + '/file/download?request_token=' + server.loadToken() + '&tbFile.fid=' + fid;
+      return (
+        server.baseUrl +
+        '/file/download?request_token=' +
+        server.loadToken() +
+        '&tbFile.fid=' +
+        fid
+      );
     },
     saveUser(user) {
       sessionStorage.setItem(server.localUserKey, JSON.stringify(user));
@@ -43,7 +49,7 @@
       }
       return JSON.parse(user);
     },
-    post: function(url, params, cb, method) {
+    post: function (url, params, cb, method) {
       method = method ? method : 'post';
       url = server.baseUrl + url;
       let promise = axios({
@@ -55,11 +61,11 @@
         }
       });
       promise
-        .then(function(resp) {
+        .then(function (resp) {
           server.saveTokey(resp.data);
           cb(resp.data);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error(error);
           cb({ code: 500, success: false, message: '请求错误' });
         });
@@ -68,11 +74,12 @@
 
   // 转换文件地址信息
   if (Vue) {
-    Vue.filter('fileurl', function(value) {
+    Vue.filter('fileurl', function (value) {
       // 下载地址
       let url = server.baseUrl + '/file/download';
       // 请求参数
-      url = url + '?tbFile.fid=' + value + '&request_token=' + server.loadToken();
+      url =
+        url + '?tbFile.fid=' + value + '&request_token=' + server.loadToken();
       return url;
     });
   }

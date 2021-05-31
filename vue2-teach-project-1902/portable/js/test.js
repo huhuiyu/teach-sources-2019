@@ -5,7 +5,8 @@
       return {
         title: '测试vue',
         echo: '',
-        result: {}
+        result: {},
+        message: {}
       };
     },
     methods: {
@@ -21,6 +22,25 @@
           }
         );
       }
+    },
+    created() {
+      let app = this;
+      // 测试门户信息获取
+      ajax.post(
+        '/portable/message/queryAll',
+        {
+          page: { pageSize: 100 },
+          tbPortableMessage: {
+            accessKey: ajax.getAccessKey(),
+            messageGroup: 'test'
+          }
+        },
+        function (data) {
+          let message = ajax.convertData(data.resultData.list);
+          console.log(message);
+          app.message = message;
+        }
+      );
     }
   });
 })();
