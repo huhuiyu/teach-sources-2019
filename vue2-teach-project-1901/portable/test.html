@@ -18,9 +18,15 @@
     <input type="text" v-model="echo">
     <button @click="ajaxTest">ajax测试</button>
     <div>{{result}}</div>
-
+    <hr>
+    <div>门户信息：{{portable}}</div>
+    <!-- 图片模式 -->
+    <img width="100px" :src="portable.img | fileurl" alt="">
+    <!-- 富文本编辑器模式 -->
+    <div v-html="portable.message"></div>
+    <!-- 文本模式 -->
+    <div>{{portable.message}}</div>
   </div>
-
 
   <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>

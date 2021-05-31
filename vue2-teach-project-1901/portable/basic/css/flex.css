@@ -1,0 +1,50 @@
+body {
+  margin: 0px;
+}
+
+.flex-box {
+  display: flex;
+}
+
+.border-box {
+  border: 1px solid #ff0000;
+  padding: 1rem;
+}
+
+.box01 {
+  justify-content: space-between;
+}
+
+.box02 {
+  justify-content: space-around;
+}
+
+.box03 {
+  justify-content: center;
+  /* 居中center，靠左：flex-start，靠右：flex-end */
+}
+
+.box04 {
+  justify-content: space-evenly;
+}
+
+.flex1 {
+  flex: 11;
+}
+.flex2 {
+  flex: 22;
+}
+.flex3 {
+  flex: 33;
+}
+
+.box5 {
+  /* 子元素总宽超过时允许换行 */
+  flex-wrap: wrap;
+  /* 换行可以和水平对齐配合 */
+  justify-content: space-evenly;
+}
+
+.box5 > div {
+  width: 30%;
+}

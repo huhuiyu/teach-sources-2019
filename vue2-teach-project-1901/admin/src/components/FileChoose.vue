@@ -78,7 +78,7 @@
 </template>
 <script>
 import tools from '../js/tools';
-import Page from '../componets/Page';
+import Page from './Page';
 
 export default {
   components: { Page },

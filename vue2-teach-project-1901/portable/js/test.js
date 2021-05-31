@@ -5,7 +5,8 @@
       return {
         title: '测试页',
         echo: '',
-        result: {}
+        result: {},
+        portable: {}
       };
     },
     methods: {
@@ -21,6 +22,23 @@
           }
         );
       }
+    },
+    created() {
+      let app = this;
+      ajax.send(
+        '/portable/message/queryAll',
+        {
+          page: { pageSize: 100 },
+          tbPortableMessage: {
+            accessKey: ajax.getAccessKey(),
+            messageGroup: 'test'
+          }
+        },
+        function (data) {
+          app.portable = ajax.convertData(
+            data.resultData.list);
+        }
+      );
     }
   });
 })();
