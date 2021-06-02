@@ -1,0 +1,51 @@
+body {
+  margin: 0px;
+}
+.flex-box {
+  display: flex;
+}
+.border-box {
+  box-sizing: border-box;
+  border: 1px solid #ff0000;
+}
+
+.mybox1 {
+  justify-content: space-between;
+}
+
+.mybox2 {
+  justify-content: space-around;
+}
+
+.mybox3 {
+  justify-content: space-evenly;
+}
+
+.mybox4 {
+  justify-content: center;
+  /* center,flex-start,flex-end */
+}
+
+.flex1 {
+  flex: 1;
+}
+.flex2 {
+  flex: 2;
+}
+.flex3 {
+  flex: 3;
+}
+
+.mybox5 {
+  align-items: center;
+  /* center,flex-start,flex-end,stretch */
+}
+
+.mybox6 {
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.mybox6 > div {
+  width: 30%;
+}
