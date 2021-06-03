@@ -1,0 +1,43 @@
+body {
+  margin: 0px;
+}
+
+.flex-box {
+  display: flex;
+}
+
+.border-box {
+  border: 1px solid #ff0000;
+  padding: 1rem;
+}
+
+.border-box01 {
+  border: 5px solid #0000ff;
+}
+
+.box01 {
+  flex-direction: column;
+  height: 300px;
+  justify-content: space-between;
+}
+
+.box02 {
+  flex-direction: column;
+  height: 300px;
+}
+
+.box02 > div:nth-child(2) {
+  flex: 1;
+}
+.box02 > div:nth-child(3) {
+  flex: 3;
+}
+
+.fixed-box {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}

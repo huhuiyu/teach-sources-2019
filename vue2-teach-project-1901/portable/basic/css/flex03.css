@@ -1,0 +1,17 @@
+body {
+  margin: 0px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.container > main {
+  flex: 1;
+  overflow: auto;
+}
+
+.container > main > div {
+  height: 2000px;
+}
