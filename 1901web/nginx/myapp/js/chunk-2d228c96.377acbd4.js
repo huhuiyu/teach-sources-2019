@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d228c96"],{db57:function(n,e,t){"use strict";t.r(e);var a=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div",[t("div",[n._v(n._s(n.title))])])},u=[],c={name:"ManageOne",data:function(){return{title:"管理页面一"}}},i=c,l=t("2877"),r=Object(l["a"])(i,a,u,!1,null,null,null);e["default"]=r.exports}}]);
