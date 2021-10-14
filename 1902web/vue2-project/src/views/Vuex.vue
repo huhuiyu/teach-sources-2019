@@ -5,6 +5,7 @@
     <div>
       vuex的变量：{{ counter }}
       <button @click="changeVuex">修改vuex的变量</button>
+      <button @click="actionChangeVuex">Action修改vuex的变量</button>
       <button @click="toOther">跳转其它页面</button>
     </div>
     <!-- 组件的部分 -->
@@ -33,6 +34,16 @@ export default {
   methods: {
     changeVuex() {
       this.$store.commit('changeCounter');
+    },
+    actionChangeVuex() {
+      let promise = this.$store.dispatch('changeCounter');
+      promise
+        .then(function () {
+          console.log('异步处理commit');
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
     },
     toOther() {
       this.$router.push('/vuexother');
