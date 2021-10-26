@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js处理get参数</title>
+</head>
+
+<body>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+  <script>
+    // 通过js获取get提交的数据
+    // href是全地址栏url，seacch是get的数据(查询字符串)
+    console.log(location.href, location.search)
+    let json = { tbAdmin: { username: '张三' } }
+    console.log(Qs.stringify(json, { allowDots: true }))
+    let strQs = 'user.name=abc&user.info=def';
+    console.log(Qs.parse(strQs, { allowDots: true }))
+    // 去掉问号
+    let info = location.search.substr(1);
+    console.log(Qs.parse(info, { allowDots: true }))
+  </script>
+</body>
+
+</html>
