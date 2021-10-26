@@ -5,10 +5,16 @@
       <input type="text" v-model="md5" />
       md5:{{ md5info }}
     </div>
+    <div>
+      <vuex-user></vuex-user>
+      <!-- 登出功能需要清除vuex中的用户 -->
+    </div>
   </div>
 </template>
 <script>
+import VuexUser from '../components/VuexUser.vue'
 export default {
+  components: { VuexUser },
   name: 'Test',
   data() {
     return {
