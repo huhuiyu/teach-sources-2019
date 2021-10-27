@@ -30,7 +30,18 @@
     <input type="text" name="tbAdmin.username">
     <input type="submit">
   </form>
-  
+  <!-- get提交的效果和超链接是一样的 -->
+  <a href="http://127.0.0.1:5500/public/formdata.html?tbAdmin.username=dfdasf">
+    get提交超链接效果
+  </a>
+  <button id="btnLocation">js触发超链接模式的get提交</button>
+  <script>
+    document.getElementById('btnLocation')
+      .addEventListener('click',function(){
+        location='http://127.0.0.1:5500/public/formdata.html?tbAdmin.username=dfdasf'
+    });
+  </script>
+
   <iframe src="https://huhuiyu.top" frameborder="0"></iframe>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>

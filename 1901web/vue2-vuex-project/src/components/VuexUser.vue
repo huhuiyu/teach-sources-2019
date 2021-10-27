@@ -2,17 +2,14 @@
   <div>
     <div>{{ title }}</div>
     <div>{{ userinfo }}</div>
-    <vuex-user></vuex-user>
   </div>
 </template>
 <script>
-import VuexUser from '../components/VuexUser.vue'
 export default {
-  name: 'Test',
-  components: { VuexUser },
+  name: 'VuexUser',
   data() {
     return {
-      title: '测试页',
+      title: '组件显示vuex的用户信息',
     }
   },
   computed: {
