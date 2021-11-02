@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>form提交后端接口数据</title>
+</head>
+
+<body>
+
+  <form id="myform" onsubmit="return false;" method="post" action="https://huhuiyu.top/teach-service/userMessage/queryAll">
+    <input type="text" name="page.pageNumber" value="1">
+    <input type="text" name="page.pageSize" value="3">
+    <input type="text" name="tbUserMessage.info" placeholder="留言内容">
+    <input type="text" name="tbUserMessage.title" placeholder="留言标题">
+    <input type="submit">
+    <label>
+      <input type="checkbox" id="chkSubmit">是否提交
+    </label>
+    <button id="btnSubmit">手动提交</button>
+  </form>
+
+  <!-- get提交和查询字符串 -->
+  <form action="get.html" method="get">
+    <input type="text" name="token" placeholder="token信息">
+    <input type="hidden" name="url" value="huhuiyu.top">
+    <input type="text" name="info.title" placeholder="标题">
+    <input type="text" name="info.content" placeholder="内容">
+    <input type="submit" value="get提交">
+  </form>
+
+
+  <script>
+    let myform = document.getElementById('myform');
+    let btnSubmit = document.getElementById('btnSubmit');
+    let chkSubmit = document.getElementById('chkSubmit');
+
+    btnSubmit.addEventListener('click', function () {
+      if (chkSubmit.checked) {
+        myform.submit();
+      } else {
+        return false;
+      }
+    });
+
+    // document.forms[0]
+    // console.log(chkSubmit)
+
+  </script>
+
+</body>
+
+</html>

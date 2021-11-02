@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>get提交的数据</title>
+</head>
+
+<body>
+  <div id="divQs"></div>
+  <div id="divJson"></div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+  <script>
+    // js获取get提交的数据
+    console.log('完整地址栏信息', location.href);
+    // 获取查询字符的部分
+    // 查询字符串就是?后面的部分，不一定有
+    // 格式 名称1=值1&名称2=值2...
+    let queryString = location.search;
+    divQs.innerHTML = queryString;
+    let divJson = document.getElementById('divJson');
+    // 用Qs来进行json和查询字符串的转换
+    let json = {
+      info: {
+        title: '哈哈哈哈', content: '嘻嘻嘻'
+      },
+      accessKey: 'abc-123'
+    };
+    console.log('json转queryString'
+      , Qs.stringify(json, { allowDots: true }));
+    // 记得要去掉开头的?
+    let qsJson = Qs.parse(queryString.substr(1));
+    console.log(qsJson);
+    divJson.innerHTML = JSON.stringify(qsJson);
+    // 原生版本的qs转json的思路
+    let info = queryString.substr(1);
+    console.log(info);
+    let infos = info.split('&');
+    console.log(infos);
+    let infoJson = {};
+    for (let i = 0; i < infos.length; i++) {
+      let data = infos[i]
+      console.log(data);
+      let datas = data.split('=');
+      console.log(datas);
+      // encodeURIComponent,decodeURIComponent一对
+      infoJson[datas[0]] = decodeURIComponent(datas[1]);
+    }
+
+    console.log(infoJson);
+  </script>
+
+</body>
+
+</html>
+<!-- 
+  练习时间：用vue调用后端接口完成用户留言和评论的全部功能
+  或者完成邮箱留言的全部功能
+  这两个接口都有需要登录才能管理的部分
+-->

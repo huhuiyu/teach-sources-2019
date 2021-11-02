@@ -3,6 +3,6 @@
     <router-view />
   </div>
 </template>
-<style>
-/* 测试用户：user user-pwd */
+<style lang="less">
+@import './css/common.less';
 </style>

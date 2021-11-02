@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import vant_router from './vant'
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,12 @@ const routes = [
     name: 'UserInfo',
     component: () => import('../views/UserInfo.vue'),
   },
-]
+  {
+    path: '/ajax',
+    name: 'Ajax',
+    component: () => import('../views/Ajax.vue'),
+  },
+].concat(vant_router)
 
 const router = new VueRouter({
   mode: 'history',
