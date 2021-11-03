@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vant_routes from './vant'
+import test_routes from './test'
 
 Vue.use(VueRouter)
 
@@ -30,7 +31,9 @@ const routes = [
     name: 'Main',
     component: () => import('../views/Main.vue'),
   },
-].concat(vant_routes)
+]
+  .concat(vant_routes)
+  .concat(test_routes)
 
 const router = new VueRouter({
   mode: 'history',
