@@ -35,6 +35,11 @@ const routes = [
     name: 'Ajax',
     component: () => import('../views/Ajax.vue'),
   },
+  {
+    path: '/map',
+    name: 'Map',
+    component: () => import('../views/Map.vue'),
+  },
 ].concat(vant_router)
 
 const router = new VueRouter({
