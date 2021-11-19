@@ -40,6 +40,11 @@ const routes = [
     name: 'Map',
     component: () => import('../views/Map.vue'),
   },
+  {
+    path: '/link',
+    name: 'Link',
+    component: () => import('../views/Link.vue'),
+  },
 ].concat(vant_router)
 
 const router = new VueRouter({

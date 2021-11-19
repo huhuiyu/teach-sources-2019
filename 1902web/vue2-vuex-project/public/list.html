@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div>
+    <table id="mytable">
+      <tr>
+        <th>
+          <input type="checkbox">
+        </th>
+        <th>
+          dfdf
+        </th>
+      </tr>
+      <tr>
+        <td>
+          <input type="checkbox" value="1">
+        </td>
+        <td>
+          ddf
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="checkbox" value="2">
+        </td>
+        <td>
+          ddf
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="checkbox" value="3">
+        </td>
+        <td>
+          ddf
+        </td>
+      </tr>
+    </table>
+    <div>
+      dfdfd
+    </div>
+    <button id="ok">ddd</button>
+    <div>
+      <button id="okvalue">bbb</button>
+    </div>
+
+  </div>
+
+  <style>
+    #mytable td input[type=checkbox] {
+      outline: none;
+    }
+  </style>
+
+
+  <script>
+
+    console.log(document.querySelectorAll('#ok + div'))
+    let ids = document.querySelectorAll(
+      '#mytable td input[type=checkbox]')
+    console.log(ids)
+    document.getElementById('ok').addEventListener('click', function () {
+      for (let i = 0; i < ids.length; i++) {
+        ids[i].checked = true;
+      }
+
+    });
+
+    document.getElementById('okvalue').addEventListener('click', function () {
+      let idsinfo = [];
+      for (let i = 0; i < ids.length; i++) {
+        if (ids[i].checked) {
+          idsinfo.push(ids[i].value)
+        }
+      }
+      console.log(idsinfo, idsinfo.join(','))
+    });
+
+  </script>
+</body>
+
+</html>
