@@ -57,6 +57,7 @@ export default {
   },
 }
 </script>
+
 <style scoped>
 .menus a {
   display: inline-block;

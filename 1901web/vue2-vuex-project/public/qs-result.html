@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>qs的结果页面</title>
+</head>
+
+<body>
+  <div id="divResult"></div>
+
+  <script>
+    let divResult = document.getElementById('divResult');
+    divResult.innerHTML = "查询参数：" + location.search;
+    // 解析qs参数，原格式：?qs=.......
+    if (location.search.length <= 0) {
+      divResult.innerHTML += "<br/>没有传递参数"
+    } else {
+      // 第一步，去掉问号
+      let info = location.search.substr(1);
+      console.log(info);
+      // 第二步，拿到qs的值
+      info = info.replace('qs=', '')
+      console.log(info)
+      divResult.innerHTML += '<br>,解码参数的结果：'
+        + decodeURIComponent(info)
+    }
+
+    // 一个字符串奇怪知识
+    let strInfo = 'yyyyabcyyyydef';
+    console.log('替换字符：', strInfo.replace('yyyy', 2021))
+    console.log('正则替换字符：', strInfo.replace(/yyyy/g, 2021))
+  </script>
+</body>
+
+</html>

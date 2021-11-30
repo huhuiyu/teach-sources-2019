@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>qs第三方库</title>
+</head>
+
+<body>
+  <div id="divResult"></div>
+  <pre id="preResult"></pre>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+
+  <script>
+    let divResult = document.getElementById('divResult');
+    let preResult = document.getElementById('preResult');
+    let qsInfo = location.search.substr(1);
+    divResult.innerHTML = '查询字符串：' + qsInfo;
+
+    preResult.innerHTML = JSON.stringify(
+      Qs.parse(qsInfo, { allowDots: true }), null, 2);
+  </script>
+
+</body>
+
+</html>

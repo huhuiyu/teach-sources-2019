@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vant_router from './vant'
+import test_router from './test'
 
 Vue.use(VueRouter)
 
@@ -45,7 +46,9 @@ const routes = [
     name: 'Link',
     component: () => import('../views/Link.vue'),
   },
-].concat(vant_router)
+]
+  .concat(vant_router)
+  .concat(test_router)
 
 const router = new VueRouter({
   mode: 'history',

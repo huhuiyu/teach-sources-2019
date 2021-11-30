@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>查询字符串知识</title>
+</head>
+
+<body>
+
+  <input type="text" id="txtQs">
+  <button id="btnQs">确定</button>
+  <button id="btnPage">跳转传参</button>
+  <button id="btnQsPage">qs库处理参数</button>
+  <div id="divQs"></div>
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+
+  <script>
+    let txtQs = document.getElementById('txtQs');
+    let btnQs = document.getElementById('btnQs');
+    let divQs = document.getElementById('divQs');
+    let btnPage = document.getElementById('btnPage');
+
+    btnQs.addEventListener('click', function () {
+      divQs.innerHTML = '输入的是：' + txtQs.value
+    })
+
+    btnPage.addEventListener('click', function () {
+      // 地址栏的查询参数是需要转码，因为不可以有中文和特殊字符等等
+      location = 'qs-result.html?qs='
+        + encodeURIComponent(txtQs.value)
+    });
+
+    btnQsPage.addEventListener('click', function () {
+      // 通过qs库处理复杂多参数的情况
+      let jsonInfo = {
+        id: 100,
+        qs: txtQs.value,
+        info: '黑暗骑士 &= darkknight',
+        dept: {
+          id: 1100
+          , info: '开发部'
+        }
+      }
+      // 作业，思考没有qs库的情况，怎么转换json到查询字符串
+      console.log('qs库处理参数'
+        , Qs.stringify(jsonInfo, { allowDots: true }));
+      location = 'qs-lib.html?'
+        + Qs.stringify(jsonInfo, { allowDots: true })
+    })
+
+  </script>
+
+
+</body>
+
+</html>
