@@ -2,6 +2,7 @@
   <div>
     <div>{{ title }}</div>
     <div>{{ list }}</div>
+    <a href="/message">message</a>
   </div>
 </template>
 <script>

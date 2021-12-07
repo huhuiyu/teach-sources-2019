@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vant_routes from './vant'
 import test_routes from './test'
+import message_routes from './message'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,7 @@ const routes = [
 ]
   .concat(vant_routes)
   .concat(test_routes)
+  .concat(message_routes)
 
 const router = new VueRouter({
   mode: 'history',

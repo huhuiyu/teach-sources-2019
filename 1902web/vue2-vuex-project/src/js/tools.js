@@ -196,4 +196,26 @@ tools.regValidator = function (rule, value, callback, reg, message) {
   }
 }
 
+// 监听window的大小变化
+tools.resize = function (cb) {
+  window.addEventListener('resize', function () {
+    cb(document.documentElement.clientWidth, document.documentElement.clientHeight)
+  })
+}
+
+// 通过本地存储传递信息，一般用于无法追踪的网站
+// 例如跳转到其它网站页面后再跳转回来（微信支付，跨站统一登录认证等等）
+const UMID_KEY = 'huhuiyu.top.umid'
+
+tools.setLocalUmid = function (umid) {
+  sessionStorage.setItem(UMID_KEY, umid)
+}
+
+tools.getLocalUmid = function () {
+  // 一般获取到之后就清理掉，也就是只要一次使用
+  let umid = sessionStorage.getItem(UMID_KEY)
+  sessionStorage.removeItem(UMID_KEY)
+  return umid
+}
+
 export default tools
