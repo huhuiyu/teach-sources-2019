@@ -6,9 +6,116 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title></title>
+
+
 </head>
 
 <body>
+  <div>
+    <input onchange="changeSex(this)" type="radio" id="sex01" name="sex" value="m">
+    <label for="sex01">男</label>
+
+    <label>
+      <input onchange="changeSex(this)" type="radio" name="sex" value="f">女
+    </label>
+
+    <label>
+      <input onchange="changeSex(this)" type="radio" name="sex" checked value="n">保密
+    </label>
+
+  </div>
+
+  <button>确定</button>
+
+  <h1>vue版本</h1>
+  <div id="app">
+    选中值：{{sex}}
+    <hr>
+    <div>
+      <label v-for="d in list" :key="d.value">
+        <input type="radio" name="sex" @change="changeSex(d)">
+        {{d.text}}
+      </label>
+    </div>
+    <div>
+      <span v-for="(d,index) in list">
+        <label for="'sex'+d.value">{{d.text}}</label>
+        <input type="radio" :id="'sex'+d.value">
+      </span>
+    </div>
+
+    {{list}}
+  </div>
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.min.js"></script>
+
+  <script>
+    // vue版本
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          list: [
+            { value: 'm', text: '男', checked: false },
+            { value: 'f', text: '女', checked: false },
+            { value: 'n', text: '保密', checked: true },
+          ],
+          list1: [],
+          sex: 'n',
+          sexModel: 'n'
+        }
+      },
+      computed: {
+      }, methods: {
+        changeSex(d) {
+          let i = 0;
+          i = i + 1;
+          i++;
+          this.list.forEach((v) => {
+            v.checked = false;
+          });
+          d.checked = true;
+          this.sex = d.value
+        }
+      }
+    });
+  </script>
+
+  <script>
+
+    // 原生版本  =========================================
+    let sexList = document.querySelectorAll(
+      'body div:first-of-type input')
+    console.log(sexList);
+
+    let btnOk = document.querySelector('body button:first-of-type');
+    btnOk.addEventListener('click', function () {
+      let sex = 'n';
+      for (let i = 0; i < sexList.length; i++) {
+        if (sexList[i].checked) {
+          sex = sexList[i].value
+          break;
+        }
+      }
+      alert(sex);
+
+      sexList.forEach((v) => {
+        console.log(v);
+      });
+      alert(xb);
+
+    });
+
+    let xb = 'n';
+    function changeSex(ele) {
+      console.log(ele);
+      if (ele.checked) {
+        xb = ele.value
+      }
+    }
+
+  </script>
 
 </body>
 
