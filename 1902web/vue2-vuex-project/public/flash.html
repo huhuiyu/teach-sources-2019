@@ -13,18 +13,56 @@
     预加载页面演示(跨站点跳转)
   </h1>
 
+  <img src="https://picnew13.photophoto.cn/20190312/lansezhigankejiguangxianbeijing-33120777_1.jpg" alt="">
+
   <iframe id="myframe" src="" frameborder="0"></iframe>
 
 
   <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
   <script>
-    let redirect_url = 'http://127.0.0.1:8080/message/flash';
+    // 定制信息版本
+    let search = location.search.replace('?', '');
+    let params = Qs.parse(search);
+    console.log('查询字符串参数：', search, params);
+    document.querySelector('title').innerHTML = params.title;
+    document.querySelector('h1').innerHTML = params.info;
+
+    // encodeURIComponent decodeURIComponent
+
+    let redirect_url = params.targetUrl;
     // 通过延迟来模拟业务处理完再跳转的效果
     // setTimeout(() => {
     //   location.href = redirect_url;
     // }, 5000)
     document.getElementById('myframe')
       .setAttribute('src', redirect_url);
+
+    // 监听子页面（一般是跨域）发送的消息
+    window.addEventListener('message', function (ev) {
+      console.log(ev)
+      if ('loaded' == ev.data) {
+        // 收到加载完消息就跳转
+        // location.href = redirect_url;
+      }
+    })
+    console.log('监听图片加载', new Date().getTime());
+    document.querySelector('img').addEventListener(
+      'load', function () {
+        // 媒体文件可以监听load事件，表示已经加载完毕
+        console.log('图片加载完成', new Date().getTime());
+      });
+
+    document.body.onload = function () {
+      console.log('页面加载完毕', new Date().getTime())
+    }
+
+    let jsimg = document.createElement('img');
+    jsimg.addEventListener('load', function () {
+      console.log('图片预加载完成');
+      // 后面写着页面中
+    });
+    jsimg.setAttribute('src', 'https://picnew13.photophoto.cn/20190312/lansezhigankejiguangxianbeijing-33120777_1.jpg')
+
 
   </script>
 

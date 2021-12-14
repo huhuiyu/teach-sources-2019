@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fixed布局</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    header,
+    footer {
+      position: fixed;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      height: 3rem;
+      line-height: 3rem;
+      text-align: center;
+      width: 100vw;
+    }
+
+    header {
+      top: 0px
+    }
+
+    footer {
+      bottom: 0px;
+    }
+
+    main {
+      /* 最大弊病就是中间的会被挡住，所以计算marging，非常不灵活 */
+      margin: 3rem 0px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>头部元素锁定</header>
+  <main>中间是大量的内容<br></main>
+  <footer>脚部元素锁定</footer>
+
+
+  <script>
+    // css 层叠样式表
+    let elMain = document.querySelector('main')
+    for (let i = 0; i < 200; i++) {
+      elMain.append(Math.random() * 1000000)
+      elMain.append(document.createElement('br'))
+    }
+  </script>
+</body>
+
+</html>

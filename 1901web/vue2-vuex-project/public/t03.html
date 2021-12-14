@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>flex布局</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    * {
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+
+    header,
+    footer {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      text-align: center;
+    }
+
+    header {
+      height: 5rem;
+      line-height: 5rem;
+    }
+
+    header.topin {
+      animation: top-in 1s;
+      position: sticky;
+      top: 0px;
+    }
+
+    @keyframes top-in {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(0%);
+      }
+    }
+
+    .container {
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>头部元素锁定</header>
+    <main>中间是大量的内容<br></main>
+    <footer>脚部元素锁定</footer>
+  </div>
+
+
+  <script>
+    // css 层叠样式表
+    let elMain = document.querySelector('main')
+    for (let i = 0; i < 200; i++) {
+      elMain.append(Math.random() * 1000000)
+      elMain.append(document.createElement('br'))
+    }
+
+    let container = document.querySelector('.container');
+    let header = document.querySelector('header');
+    // 通过一个状态位来判断是否需要添加或者移除特效
+    let mode = 'static';
+    let maxHeight = 400;
+
+    container.addEventListener('scroll', function () {
+      console.log('容器滚动',
+        elMain.offsetTop, elMain.offsetLeft,
+        container.scrollLeft, container.scrollTop);
+      if ('static' == mode && container.scrollTop > maxHeight) {
+        mode = 'sticky'
+        header.classList.add('topin');
+      } else if ('sticky' == mode && container.scrollTop < maxHeight) {
+        mode = 'static'
+        header.classList.remove('topin');
+      }
+
+    });
+
+    window.addEventListener('resize', function () {
+      console.log('视窗大小变化',
+        document.documentElement.clientWidth,
+        document.documentElement.clientHeight,
+        elMain.clientWidth, elMain.clientHeight)
+    })
+
+  </script>
+</body>
+
+</html>

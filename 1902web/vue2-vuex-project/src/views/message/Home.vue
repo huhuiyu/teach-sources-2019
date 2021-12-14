@@ -1,11 +1,11 @@
 <template>
   <div>
     <div>{{ title }}</div>
-    
-    <a href="http://127.0.0.1:5500/public/flash.html"> 
-      跨站跳跃页面 
-    </a>
 
+    <a href="http://127.0.0.1:5500/public/flash.html"> 跨站跳跃页面 </a>
+    |
+    <a href="javascript:void(0)" @click="toFlash">带参数的跨站跳转</a>
+    |
     <a href="/ajax">ajax</a>
     <div class="main">
       <!-- 通过数字控制列 -->
@@ -43,6 +43,7 @@
 </template>
 <script>
 import tools from '../../js/tools'
+import qs from 'qs'
 
 export default {
   name: 'Message',
@@ -56,6 +57,16 @@ export default {
     }
   },
   methods: {
+    toFlash() {
+      let flash = 'http://127.0.0.1:5500/public/flash.html?'
+      let params = {
+        title: '跳转的title',
+        info: '跳转的加载信息。。。',
+        targetUrl: 'http://127.0.0.1:8080/message/flash',
+      }
+      let url = flash + qs.stringify(params, { allowDots: true })
+      location = url
+    },
     toDetail(umid) {
       tools.setLocalUmid(umid)
       this.$router.push({

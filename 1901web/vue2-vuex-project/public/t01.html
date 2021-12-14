@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>杂项知识</title>
+
+  <style>
+    body {
+      margin: 0px;
+      overflow-x: hidden;
+    }
+
+    .main {
+      display: flex;
+      width: 100vw;
+      overflow-x: scroll;
+      /* 以子元素大小作为滚动单位 ,x表示之处理横向滚动 */
+      scroll-snap-type: x mandatory;
+    }
+
+    .main>div {
+      width: 33.33333vw;
+      height: 100px;
+      color: #fff;
+      flex: 0 0 33.33333vw;
+      /* 子元素滚动标记 */
+      scroll-snap-align: start;
+    }
+
+    .main>div:nth-child(3n) {
+      background-color: #ff0000;
+    }
+
+    .main>div:nth-child(3n+1) {
+      background-color: #ff00ff;
+    }
+
+    .main>div:nth-child(3n+2) {
+      background-color: #0000ff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="main">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+  </div>
+
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+
+  <script>
+    let json = { name: '张三', id: 100 };
+    console.log('json字符串化', JSON.stringify(json));
+    console.log('json转查询字符串', Qs.stringify(json));
+
+    // 提交form数据和json(现在非常流行这种模式)的区别
+    // 默认axios是不会转换data的json，而是启动json格式数据提交
+    // 也就是：Content-Type: application/json;charset=UTF-8
+    // 请在network界面仔细观察提交区别
+    // 不接受json的api演示 ==================================
+    axios({
+      url: 'https://huhuiyu.top/teach-service/'
+      , method: 'POST',
+      data: { echo: '黑暗骑士' }
+    }).then(function (resp) {
+      // 服务器无法接收到echo参数
+      console.log(resp.data);
+    }).catch(function (err) {
+      console.error(err);
+    });
+    // 如果data是字符串
+    // Content-Type: application/x-www-form-urlencoded
+    axios({
+      url: 'https://huhuiyu.top/teach-service/'
+      , method: 'POST',
+      data: Qs.stringify({ echo: '黑暗骑士' })
+    }).then(function (resp) {
+      console.log(resp.data);
+    }).catch(function (err) {
+      console.error(err);
+    });
+
+    // 接收json格式的请求演示部分 =====================
+    axios({
+      url: 'https://huhuiyu.top/teach-service/test/json'
+      , method: 'POST',
+      data: {
+        imgCode: '123456',
+        tbAdmin: {
+          username: '张三',
+          password: 'dddd'
+        }
+      }
+    }).then(function (resp) {
+      console.log(resp.data);
+    }).catch(function (err) {
+      console.error(err);
+    });
+
+
+    axios({
+      url: 'https://huhuiyu.top/teach-service/test/json'
+      , method: 'POST',
+      data: Qs.stringify({
+        imgCode: '123456',
+        tbAdmin: {
+          username: '张三',
+          password: 'dddd'
+        }
+      }, { allowDots: true })
+    }).then(function (resp) {
+      console.log(resp.data);
+    }).catch(function (err) {
+      console.error(err);
+    });
+
+
+  </script>
+
+</body>
+
+</html>
