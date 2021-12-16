@@ -65,7 +65,7 @@ serverInfo.ajax = function (url, param, callback, method) {
     })
 }
 
-const MAX_FILE_SIZE = 1 * 1024 * 1024
+const MAX_FILE_SIZE = 2 * 1024 * 1024
 const MAX_FILE_SIZE_MESSAGE = { code: 500, success: false, message: '上传文件大小不能超过1MB' }
 
 serverInfo.upload = function (url, param, file, callback) {

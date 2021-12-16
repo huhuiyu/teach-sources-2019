@@ -8,8 +8,11 @@ Vue.use(myplugins)
 
 import Vant from 'vant'
 import 'vant/lib/index.css'
-
 Vue.use(Vant)
+
+import 'ant-design-vue/dist/antd.css'
+import antd from 'ant-design-vue'
+Vue.use(antd)
 
 Vue.config.productionTip = false
 

@@ -7,6 +7,22 @@ let myplugin = {}
 const wsMap = new Map()
 
 myplugin.install = function (Vue) {
+  // 复制文本的方法
+  Vue.prototype.$copyText = function (str) {
+    let input = document.createElement('input')
+    input.readOnly = 'readonly'
+    input.value = str
+    document.body.appendChild(input)
+    input.select()
+    input.setSelectionRange(0, input.value.length)
+    document.execCommand('Copy')
+    document.body.removeChild(input)
+  }
+
+  // 获取上传的文件地址
+  Vue.prototype.$getFileUrl = function (fid) {
+    return server.serverUrl + '/file/download?tbFile.fid=' + fid
+  }
   // ajax插件封装
   Vue.prototype.$ajax = function (url, param, callback, method) {
     server.app = this
