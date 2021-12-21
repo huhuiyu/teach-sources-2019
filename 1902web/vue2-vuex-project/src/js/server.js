@@ -41,6 +41,7 @@ serverInfo.info = function () {
 
 // ajax请求
 serverInfo.ajax = function (url, param, callback, method) {
+  console.log('ajax start======>')
   url = serverInfo.serverUrl + url
   param = qs.stringify(param, { allowDots: true })
   callback = callback ? callback : serverInfo.empty

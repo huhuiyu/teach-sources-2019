@@ -139,10 +139,13 @@ tools.getFileType = function (type) {
 }
 
 // 打开文件选中对话框并获取文件
-tools.openFile = function (cb, instance) {
+tools.openFile = function (cb, accept, instance) {
   let result = { el: null, file: null, type: '' }
   let file = document.createElement('input')
   file.setAttribute('type', 'file')
+  if (accept) {
+    file.setAttribute('accept', accept)
+  }
   result.el = file
   // 文件改变事件
   file.addEventListener('change', function () {

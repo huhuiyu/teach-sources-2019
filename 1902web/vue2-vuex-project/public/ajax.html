@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ajax请求</title>
+</head>
+
+<body>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.10.1/qs.min.js"></script>
+
+  <script>
+
+    const BASE_URL = 'https://huhuiyu.top/teach-service';
+    axios({
+      url: BASE_URL + '/',
+      data: { echo: '黑暗骑士' },
+      method: 'POST'
+    }).then((resp) => {
+      console.log('data为json的echo请求结果', resp.data)
+    }).catch((err) => {
+      console.error(err);
+    });
+
+    axios({
+      url: BASE_URL + '/',
+      data: "echo=黑暗骑士",
+      method: 'POST'
+    }).then((resp) => {
+      console.log('data为qs的echo请求结果', resp.data)
+    }).catch((err) => {
+      console.error(err);
+    });
+
+    axios({
+      url: BASE_URL + '/test/json',
+      data: "imgCode=abc123",
+      method: 'POST'
+    }).then((resp) => {
+      console.log('data为qs的/test/json请求结果', resp.data)
+    }).catch((err) => {
+      console.error(err);
+    });
+
+    axios({
+      url: BASE_URL + '/test/json',
+      data: {
+        imgCode: 'abc123',
+        tbAdmin: {
+          username: '张三',
+          password: 'dddd'
+        }
+      },
+      method: 'POST'
+    }).then((resp) => {
+      console.log('data为json的/test/json请求结果', resp.data)
+    }).catch((err) => {
+      console.error(err);
+    });
+
+
+  </script>
+
+</body>
+
+</html>
