@@ -35,28 +35,49 @@
         </div>
       </div>
     </div>
-
+    <div>
+      {{ page }}
+    </div>
     <!-- <div>
       {{ list }}
     </div> -->
+    <div @click="refresh" style="padding: 1rem; color: #ff00ff">
+      刷新</div>
+    <div style="padding: 1rem; color: #ff0000" 
+    v-if="page.pageCount && page.pageNumber < page.pageCount" 
+    @click="getMore">加载更多</div>
+    <div v-else>我是有底线的</div>
   </div>
 </template>
 <script>
 import tools from '../../js/tools'
 import qs from 'qs'
-
+const def_size = 10
 export default {
   name: 'Message',
   data() {
     return {
       title: '最简单的vue瀑布流循环',
-      page: {},
+      page: { pageSize: def_size },
       tbUserMessage: {},
       list: [],
       count: 4,
+      isRefresh: false,
     }
   },
   methods: {
+    refresh() {
+      this.list = []
+      this.page.pageSize = 
+        this.page.pageNumber * def_size
+      this.page.pageNumber = 1
+      this.isRefresh = true
+      this.query()
+    },
+    getMore() {
+      this.page.pageNumber++
+      this.query()
+    },
     toFlash() {
       let flash = 'http://127.0.0.1:5500/public/flash.html?'
       let params = {
@@ -89,7 +110,18 @@ export default {
         function (data) {
           if (data.success) {
             this.page = data.resultData.page
-            this.list = data.resultData.list
+             // 加载更多其实就是追加到数组，而不是替换数据
+            this.list = this.list.concat(data.resultData.list)
+            if (this.isRefresh) {
+              this.page.pageSize = def_size
+              this.isRefresh = false
+              this.page.pageNumber = 
+                parseInt(this.list.length / def_size)
+              this.page.pageNumber = 
+                this.list.length % def_size == 0 
+                ? this.page.pageNumber 
+                : this.page.pageNumber + 1
+            }
             return
           }
           alert(data.message)
