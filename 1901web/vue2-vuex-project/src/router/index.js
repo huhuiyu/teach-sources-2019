@@ -33,6 +33,16 @@ const routes = [
     name: 'Main',
     component: () => import('../views/Main.vue'),
   },
+  {
+    path: '/Q1',
+    name: 'Q1',
+    component: () => import('../views/Q1.vue'),
+  },
+  {
+    path: '/Q2',
+    name: 'Q2',
+    component: () => import('../views/Q2.vue'),
+  },
 ]
   .concat(vant_routes)
   .concat(test_routes)

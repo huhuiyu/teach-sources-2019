@@ -28,13 +28,14 @@
     </div>
 
     <!-- 预览图片模式 -->
-    <div>
-      <div v-for="d in list" :key="d.fid">
-        <img :src="fileurl(d.fid)" alt="" />
+    <div class="images">
+      <div v-for="d in list" :key="d.fid" 
+        :title="d.fileinfo+ ':' +d.filename">
+        <img @click="showFid(d.fid, d)" :src="fileurl(d.fid)" alt="" />
       </div>
     </div>
 
-    <div class="images">
+    <div>
       <a-button @click="chooseFile" type="primary">关闭</a-button>
     </div>
   </div>
@@ -172,3 +173,27 @@ export default {
   },
 }
 </script>
+<style scoped>
+.images {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.images img {
+  max-width: 100%;
+  height: auto;
+  transition: transform 1s;
+}
+
+.images > div {
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  width: 100px;
+}
+
+.images > div:hover img {
+  transform: scale(110%);
+  cursor: pointer;
+}
+</style>
