@@ -30,6 +30,16 @@ myplugin.install = function (Vue) {
   Vue.prototype.$logger = logger
   // 服务器信息对象
   Vue.prototype.$serverInfo = serverInfo
+  // 封装的几个要素
+  // 第一个：为什么需要封装？简单的说就是代码重用
+  //    重复的代码不要反复的写，修改起来会变得复杂
+  // 第二个：封装的构思，重复的部分抽出成封装代码，
+  //    无法获取的信息通过参数或者方法传入
+  // 简单的封装例子：
+  // 服务器返回的时间信息都是时间戳，页面需要显示正常的时间格式
+  // 所以将时间戳转换格式字符串统一封装到了filter解决
+  // 
+
   // ajax请求
   Vue.prototype.$ajax = function () {
     let instance = this
