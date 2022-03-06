@@ -10,8 +10,20 @@ class Ajax {
    * 构造ajax请求处理类
    * @param {string}} serverUrl api接口的公用根地址
    */
-  constructor(serverUrl) {
+  constructor(serverUrl, serverTokenKey) {
     this.serverUrl = serverUrl;
+    this.serverTokenKey = serverTokenKey;
+  }
+
+  saveToken(data) {
+    if (data && data.token) {
+      localStorage.setItem(this.serverTokenKey, data.token);
+    }
+  }
+
+  loadToken() {
+    let token = localStorage.getItem(this.serverTokenKey);
+    return token ? token : '';
   }
 
   /**
@@ -37,10 +49,15 @@ class Ajax {
     let promise = axios({
       url: url,
       method: method,
-      data: param
+      data: param,
+      headers: {
+        token: this.loadToken()
+      }
     });
     promise
       .then((resp) => {
+        // 保存token
+        this.saveToken(resp.data);
         // 正确的响应就回调应答的服务器数据
         cb(resp.data);
       })

@@ -36,7 +36,21 @@ class Server {
       data: param,
       method: method
     });
-    promise.then().catch();
+    promise
+      .then((resp) => {
+        console.log('ajax请求结果', resp);
+        try {
+          cb(resp.data);
+        } catch (error) {
+          console.error(error);
+          cb({ code: 500, success: false, message: '回调处理错误' });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        cb({ code: 500, success: false, message: '服务器错误' });
+      });
+    // 写两个方法计算n的阶乘，一个使用循环完成，一个使用递归完成
   }
 }
 

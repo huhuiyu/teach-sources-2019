@@ -16,6 +16,15 @@ let app = new Vue({
     };
   },
   created() {
+    let set = new Set();
+    set.add('唐剑');
+    set.add('唐澳');
+    set.add('唐剑');
+    set.add('唐澳');
+    set.forEach((setData) => {
+      console.log(setData);
+    });
+
     ajax.send('/', { echo: '黑暗骑士' }, (data) => {
       console.log(data);
     });

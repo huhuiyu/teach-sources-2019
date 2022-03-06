@@ -11,11 +11,30 @@
 <body>
   <div id="app">
     {{title}}
+
+    <hr>
+    <!-- 自动重连的websocket封装 -->
+    <input type="text" v-model="chatInfo.info">
+    <button @click="send">发送</button>
+    <div>
+      <div v-for="d in infos">
+        {{d}}
+      </div>
+    </div>
+
   </div>
 
   <script type="module" src="js/demo02.js"></script>
 
+  <script>
+    // 目标：封装ajax
+    // 需要api的url,api的参数，api的请求方式，应答的处理function
+    function ajax(uri, param, method, cb) {
 
+    }
+
+
+  </script>
 </body>
 
 </html>
